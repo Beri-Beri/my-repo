@@ -1,6 +1,9 @@
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 
+quiet_logger = logging.getLogger('quiet_logger')
+quiet_logger.setLevel(logging.WARNING)
+
 def get_numbers():
     pass
 def suma(numbers):
@@ -34,7 +37,36 @@ def get_numbers():
                 break
     return numbers
 
-    if __name__ == "__main__":
+def suma(numbers):
+    logging.info(f"Dodaję: {', '.join(map(str, numbers))}")
+    return sum(numbers)
+
+def minus(numbers):
+    logging.info(f"Odejmuję: {', '.join(map(str, numbers))}")
+    result = numbers[0]
+    for no in range(1, len(numbers)):
+        result -= numbers[no]
+    return result
+
+def div(numbers):
+    if 0 in numbers[1:]:
+        logging.error("Błąd: Dzielenie przez zero")
+        raise ZeroDivisionError("Nie można dzielić przez zero")
+
+    logging.info(f"Dzielę: {', '.join(map(str, numbers))}")
+    result = numbers[0]
+    for no in range (1, len(numbers)):
+        result /= numbers[no]
+    return result
+
+def multi(numbers):
+    logging.info(f"Mnożę: : {', '.join(map(str, numbers))}")
+    result = 1
+    for no in numbers:
+        result *= no
+    return(result)
+
+if __name__ == "__main__":
     operation = input(f"Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: ")
 
     numbers = get_numbers()
