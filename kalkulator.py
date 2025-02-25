@@ -29,7 +29,7 @@ def addition(numbers):
     logging.info(f"Dodaję: {', '.join(map(str, numbers))}")
     return sum(numbers)
 
-def substraction(numbers):
+def subtraction(numbers):
     logging.info(f"Odejmuję: {', '.join(map(str, numbers))}")
     result = numbers[0]
     for no in range(1, len(numbers)):
@@ -54,22 +54,23 @@ def multi(numbers):
         result *= no
     return(result)
 
+calculator = {
+    '1': addition,
+    '2': subtraction,
+    '3': div,
+    '4': multi,
+}
+
 if __name__ == "__main__":
     operation = input(f"Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: ")
 
     numbers = get_numbers()
 
-    if operation == '1':
-        print(f"Wynik: {addition(numbers)}")
-    elif operation == '2':
-        print(f"Wynik: {substraction(numbers)}")
-    elif operation == '3':
-        print(f"Wynik: {multi(numbers)}")
-    elif operation == '4':
-        try:
-            print(f"Wynik: {div(numbers)}")
-        except ZeroDivisionError as x:
-            print(f"Błąd: {x}")
-    else:
-        logging.error("Niepoprawna operacja!")
-        print("Niepoprawna operacja")
+if operation in calculator:
+    try:
+        print(f"Wynik: {calculator[operation](numbers)}")
+    except ZeroDivisionError as x:
+        print(f"Błąd: {x}")
+else:
+    logging.error("Niepoprawna operacja!")
+    print("Niepoprawna operacja")
