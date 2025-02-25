@@ -36,8 +36,8 @@ def multi(numbers):
 calculator = {
     '1': addition,
     '2': subtraction,
-    '3': div,
-    '4': multi,
+    '3': multi,
+    '4': div,
 }
 
 def get_numbers(operation):
