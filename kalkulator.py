@@ -4,27 +4,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 quiet_logger = logging.getLogger('quiet_logger')
 quiet_logger.setLevel(logging.WARNING)
 
-
-def get_numbers():
-    numbers = []
-    index = 1
-    while len(numbers) < 2:
-        try:
-            num = input(f"Podaj składnik {index}. (lub wpisz 'q', aby zakończyć): ")
-            if num.lower() == 'q':
-                if len(numbers) < 2:
-                    quiet_logger.warning("Musisz podać przynajmniej dwie liczby!")
-                    continue
-                break
-            numbers.append(float(num))
-            quiet_logger.info(f"Podaj składnik {index}: {num}")
-            index += 1
-        except ValueError:
-            choice = input("To nie jest liczba. Wpisz 'q', aby zakończyć lub spróbuj ponownie: ")
-            if choice.lower() == 'q':
-                break
-    return numbers
-
 def addition(numbers):
     logging.info(f"Dodaję: {', '.join(map(str, numbers))}")
     return sum(numbers)
@@ -60,6 +39,33 @@ calculator = {
     '3': div,
     '4': multi,
 }
+
+def get_numbers(operation):
+    numbers = []
+    index = 1
+
+    min_num = 2
+
+    while True:
+        num = input(f"Podaj składnik {index}. (lub wpisz 'q', aby zakończyć): ")
+
+        if num.lower() == 'q' and len(numbers) < min_num:
+            quiet_logger.warning(f"Musisz podać przynajmniej {min_num} liczby!")
+            continue
+        elif num.lower() == 'q':
+            break
+
+        try:
+            num = float(num)
+            numbers.append(num)
+            index += 1
+        except ValueError:
+            print("To nie jest liczba. Spróbuj ponownie.")
+        
+        if operation in ['2', '4'] and len(numbers) == 2:
+            break 
+    return numbers
+
 
 if __name__ == "__main__":
     operation = input(f"Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: ")
