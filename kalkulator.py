@@ -4,8 +4,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 quiet_logger = logging.getLogger('quiet_logger')
 quiet_logger.setLevel(logging.WARNING)
 
-if __name__ == "__main__":
-    pass
 
 def get_numbers():
     numbers = []
@@ -27,11 +25,11 @@ def get_numbers():
                 break
     return numbers
 
-def suma(numbers):
+def addition(numbers):
     logging.info(f"Dodaję: {', '.join(map(str, numbers))}")
     return sum(numbers)
 
-def minus(numbers):
+def substraction(numbers):
     logging.info(f"Odejmuję: {', '.join(map(str, numbers))}")
     result = numbers[0]
     for no in range(1, len(numbers)):
@@ -62,9 +60,9 @@ if __name__ == "__main__":
     numbers = get_numbers()
 
     if operation == '1':
-        print(f"Wynik: {suma(numbers)}")
+        print(f"Wynik: {addition(numbers)}")
     elif operation == '2':
-        print(f"Wynik: {minus(numbers)}")
+        print(f"Wynik: {substraction(numbers)}")
     elif operation == '3':
         print(f"Wynik: {multi(numbers)}")
     elif operation == '4':
