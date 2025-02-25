@@ -4,16 +4,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 quiet_logger = logging.getLogger('quiet_logger')
 quiet_logger.setLevel(logging.WARNING)
 
-def get_numbers():
-    pass
-def suma(numbers):
-    pass
-def minus(numbers):
-    pass
-def div(numbers):
-    pass
-def multi(numbers):
-    pass
 if __name__ == "__main__":
     pass
 
