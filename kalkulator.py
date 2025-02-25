@@ -43,7 +43,6 @@ calculator = {
 def get_numbers(operation):
     numbers = []
     index = 1
-
     min_num = 2
 
     while True:
@@ -66,15 +65,15 @@ def get_numbers(operation):
             break 
     return numbers
 
-
 if __name__ == "__main__":
     operation = input(f"Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: ")
 
-    numbers = get_numbers()
+    numbers = get_numbers(operation)
 
 if operation in calculator:
     try:
-        print(f"Wynik: {calculator[operation](numbers)}")
+        result = calculator[operation](numbers)
+        print(f"Wynik: {result:.2f}")
     except ZeroDivisionError as x:
         print(f"Błąd: {x}")
 else:
