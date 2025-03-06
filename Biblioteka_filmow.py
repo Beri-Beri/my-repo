@@ -7,6 +7,9 @@ class Movie:
         #Variable
         self._current_views=0
 
+    def __str__(self):
+        return f"{self.title} ({self.release})"
+
 class Series(Movie):
     def __init__(self, title, release, genre, ep_no, season_no):
         super().__init__(title, release, genre)
@@ -15,3 +18,7 @@ class Series(Movie):
 
          #Variable
         self._current_views = 0
+    
+    def __str__(self):
+        return f"{self.title} S{self.season_no:02d}E{self.ep_no:02d}"
+    
