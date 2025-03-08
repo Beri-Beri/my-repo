@@ -60,3 +60,7 @@ def get_movies():
 
 def get_series():
     return [item for item in library if isinstance(item, Series)]
+
+def search(title): 
+    search_result = [item for item in library if title.lower() in item.title.lower()]
+    return sorted(search_result, key=lambda result: result.title)
