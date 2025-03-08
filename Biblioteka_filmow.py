@@ -55,3 +55,8 @@ def generate_library():
     add_to_library(Series("Stranger Things", 2016, "Horror", 1, 1))
     add_to_library(Series("Stranger Things", 2016, "Horror", 2, 1))
 
+def get_movies():
+    return [item for item in library if isinstance(item, Movie) and not isinstance(item, Series)]
+
+def get_series():
+    return [item for item in library if isinstance(item, Series)]
