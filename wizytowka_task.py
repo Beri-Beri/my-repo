@@ -18,3 +18,11 @@ class BusinessCard:
     @property
     def card_length(self):
         return len(self.name) + len(self.last_name) + 1
+    
+class BaseContact(BusinessCard):
+    def __init__(self, name, last_name, phone, email):
+        super().__init__(name, last_name, company=None, job_title=None, phone=phone, email=email)
+    
+    def contact(self):
+        print(f"Wybieram numer {self.phone} i dzwonię do {self.name} {self.last_name}")
+         
