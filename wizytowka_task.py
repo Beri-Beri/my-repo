@@ -9,4 +9,9 @@ class BusinessCard:
         self.phone = phone
         self.email = email
 
+    def __str__(self):
+        return f"{self.name} {self.last_name}, {self.job_title} at {self.company}, Email: {self.email}, Phone: {self.phone}"
     
+    def contact(self):
+        print(f"Kontaktuję się z {self.name} {self.last_name}, {self.job_title}, Email: {self.email}")
+
