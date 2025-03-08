@@ -75,3 +75,12 @@ def generate_views():
 def run_views(n=10):
     for i in range(n):
         generate_views()
+
+def top_titles(content_type, top_n=3):
+    if content_type == "movie":
+        filtered = get_movies()
+    elif content_type == "series":
+        filtered = get_series()
+    else:
+        filtered = library
+    return sorted(filtered, key=lambda top: top.current_views, reverse=True)[:top_n]
