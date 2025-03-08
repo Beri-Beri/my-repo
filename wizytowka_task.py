@@ -1,7 +1,7 @@
 from faker import Faker
 
 class BusinessCard:
-    def __init__(self, name, last_name, job_title, company, phone, email)
+    def __init__(self, name, last_name, job_title, company, phone, email):
         self.name = name
         self.last_name = last_name
         self.job_title = job_title
@@ -21,8 +21,15 @@ class BusinessCard:
     
 class BaseContact(BusinessCard):
     def __init__(self, name, last_name, phone, email):
-        super().__init__(name, last_name, company=None, job_title=None, phone=phone, email=email)
+        super().__init__(name, last_name, job_title=None, company=None, phone=phone, email=email)
     
     def contact(self):
         print(f"Wybieram numer {self.phone} i dzwonię do {self.name} {self.last_name}")
          
+class BusinessContact(BusinessCard):
+    def __init__(self, name, last_name, job_title, company, phone, email, work_phone):
+        super().__init__(name, last_name, job_title, company, phone=None, email=None) 
+        self.work_phone = work_phone
+    
+    def contact(self):
+        print(f"Wybieram numer służbowy {self.work_phone} i dzwonię do {self.name} {self.last_name}")
