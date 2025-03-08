@@ -64,3 +64,14 @@ def get_series():
 def search(title): 
     search_result = [item for item in library if title.lower() in item.title.lower()]
     return sorted(search_result, key=lambda result: result.title)
+
+def generate_views():
+    if library:
+        item = random.choice(library)
+        item.play(random.randint(1, 100))
+        return item
+    return None
+
+def run_views(n=10):
+    for i in range(n):
+        generate_views()
