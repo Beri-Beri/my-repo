@@ -94,3 +94,15 @@ def add_seasons(title, release, genre, season_no, add_ep):
 
 def count_ep(series_title):
     return sum(1 for item in library if isinstance(item, Series) and item.title.lower() == series_title.lower())
+
+current_date = datetime.datetime.now()
+
+if __name__ == "__main__":
+    print(f"Biblioteka filmów")
+
+    generate_library()
+    
+    run_views(10)
+
+    top_3_titles = [str(item) for item in top_titles('all', top_n=3)]
+    print(f"Najpopularniejsze filmy i seriale dnia {current_date:%d-%m-%Y} {', '.join(top_3_titles)}")
