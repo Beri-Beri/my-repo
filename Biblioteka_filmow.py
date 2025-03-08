@@ -84,3 +84,10 @@ def top_titles(content_type, top_n=3):
     else:
         filtered = library
     return sorted(filtered, key=lambda top: top.current_views, reverse=True)[:top_n]
+
+def add_seasons(title, release, genre, season_no, add_ep):
+    for ep_no in range(1, add_ep + 1):
+        add_to_library(Series(title, release, genre, season_no, ep_no))
+
+def count_ep(series_title):
+    return sum(1 for item in library if isinstance(item, Series) and item.title.lower() == series_title.lower())
