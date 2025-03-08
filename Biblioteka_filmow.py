@@ -1,3 +1,6 @@
+import random
+import datetime
+
 class Movie:
     def __init__(self, title, release, genre):
         self.title = title
