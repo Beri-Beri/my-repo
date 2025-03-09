@@ -38,7 +38,7 @@ class BusinessContact(BaseContact):
 
 def create_contacts(card_type, n):
     fake = Faker()
-    cards = []
+    contacts = []
 
     for data in range(n):
         name = fake.first_name()
@@ -46,16 +46,20 @@ def create_contacts(card_type, n):
         email = fake.email()
         phone = fake.phone_number()
         
-        if card_type == "base":
-            card = BaseContact(name, last_name, phone, email)
-        elif card_type == "business":
+        if card_type == "BaseContact":
+            contacts.append(BaseContact(name, last_name, phone, email))
+        elif card_type == "BusinessContact":
             job_title = fake.job()
             company = fake.company()
             work_phone = fake.phone_number()
-            card = BusinessContact(name, last_name, job_title, company, work_phone)
-        
-        cards.append(card)
+            contacts.append(BusinessContact(name, last_name, job_title, company, work_phone))
     
-    return cards
+    return contacts
+
+base_contacts = create_contacts("BaseContact", 5)
+business_contacts = create_contacts("BusinessContact", 5)
+
+for contact in base_contact + business_contacts:
+    print(contact)
 
 
