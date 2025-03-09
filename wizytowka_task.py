@@ -10,7 +10,7 @@ class BusinessCard:
         self.email = email
 
     def __str__(self):
-        return f"{self.name} {self.last_name}, {self.job_title} at {self.company}, Email: {self.email}, Phone: {self.phone}"
+        return f"{self.name} {self.last_name} - {self.job_title} at {self.company} - Email: {self.email}, Phone: {self.phone}"
     
     def contact(self):
         print(f"Kontaktuję się z {self.name} {self.last_name}, {self.job_title}, Email: {self.email}")
@@ -21,14 +21,16 @@ class BusinessCard:
     
 class BaseContact(BusinessCard):
     def __init__(self, name, last_name, phone, email):
-        super().__init__(name, last_name, job_title=None, company=None, phone=phone, email=email)
+        super().__init__(name, last_name, None, None, phone, email)
     
     def contact(self):
         print(f"Wybieram numer {self.phone} i dzwonię do {self.name} {self.last_name}")
          
-class BusinessContact(BusinessCard):
-    def __init__(self, name, last_name, job_title, company, phone, email, work_phone):
-        super().__init__(name, last_name, job_title, company, phone=None, email=None) 
+class BusinessContact(BaseContact):
+    def __init__(self, name, last_name, job_title, company, work_phone):
+        super().__init__(name, last_name, None, None) 
+        self.job_title = job_title
+        self.company = company
         self.work_phone = work_phone
     
     def contact(self):
@@ -55,3 +57,5 @@ def create_contacts(card_type, n):
         cards.append(card)
     
     return cards
+
+
