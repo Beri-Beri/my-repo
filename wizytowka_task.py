@@ -33,3 +33,25 @@ class BusinessContact(BusinessCard):
     
     def contact(self):
         print(f"Wybieram numer służbowy {self.work_phone} i dzwonię do {self.name} {self.last_name}")
+
+def create_contacts(card_type, n):
+    fake = Faker()
+    cards = []
+
+    for data in range(n):
+        name = fake.first_name()
+        last_name = fake.last_name()
+        email = fake.email()
+        phone = fake.phone_number()
+        
+        if card_type == "base":
+            card = BaseContact(name, last_name, phone, email)
+        elif card_type == "business":
+            job_title = fake.job()
+            company = fake.company()
+            work_phone = fake.phone_number()
+            card = BusinessContact(name, last_name, job_title, company, work_phone)
+        
+        cards.append(card)
+    
+    return cards
