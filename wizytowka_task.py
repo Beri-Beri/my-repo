@@ -16,7 +16,7 @@ class BusinessCard:
         print(f"Kontaktuję się z {self.name} {self.last_name}, {self.job_title}, Email: {self.email}")
 
     @property
-    def card_length(self):
+    def label_length(self):
         return len(self.name) + len(self.last_name) + 1
     
 class BaseContact(BusinessCard):
