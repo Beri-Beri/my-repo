@@ -110,3 +110,27 @@ def delete_where(conn, table, **kwargs):
     cur.execute(sql, values)
     conn.commit()
     print("Deleted")
+
+if __name__ == '__main__':
+    
+    create_flower_species_sql = """
+    CREATE TABLE IF NOT EXISTS FlowerSpecies(
+    id INTEGER PRIMARY KEY,
+    name text NOT NULL,
+    family text NOT NULL,
+    color text NOT NULL,
+    blooming_season text NOT NULL
+    );
+    """
+
+    create_flower_details_sql = """
+    CREATE TABLE IF NOT EXISTS FlowerDetails (
+    id INTEGER PRIMARY KEY,
+    species_id INTEGER NOT NULL,
+    height_cm INTEGER NOT NULL,
+    fragrance BOOLEAN NOT NULL,
+    soil_type text NOT NULL,
+    sunlight_requirement text NOT NULL,
+    FOREIGN KEY (species_id) REFERENCES FlowerSpecies (id)
+    );
+    """
