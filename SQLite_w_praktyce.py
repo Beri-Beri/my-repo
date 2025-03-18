@@ -37,3 +37,17 @@ def add_flower_species(conn, species):
    cur.execute(sql, species)
    conn.commit()
    return cur.lastrowid
+
+def add_flower_details(conn, details):
+    """
+   Add a flower details entry into the FlowerDetails table
+   :param conn:
+   :param details:
+   :return: details id
+   """
+    sql = '''INSERT INTO FlowerDetails(species_id, height_cm, fragrance, soil_type, sunlight_requirement)
+             VALUES(?,?,?,?,?)'''
+    cur = conn.cursor()
+    cur.execute(sql, details)
+    conn.commit()
+    return cur.lastrowid
