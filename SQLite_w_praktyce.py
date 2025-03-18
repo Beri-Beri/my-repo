@@ -23,3 +23,17 @@ def execute_sql(conn, sql):
        c.execute(sql)
    except Error as e:
        print(e)
+
+def add_flower_species(conn, species):
+   """
+   Add a new flower species into the FlowerSpecies table
+   :param conn:
+   :param species:
+   :return: species id
+   """
+   sql =  '''INSERT INTO FlowerSpecies(name, family, color, blooming_season)
+             VALUES(?,?,?,?)'''
+   cur = conn.cursor()
+   cur.execute(sql, species)
+   conn.commit()
+   return cur.lastrowid
