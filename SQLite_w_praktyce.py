@@ -51,3 +51,28 @@ def add_flower_details(conn, details):
     cur.execute(sql, details)
     conn.commit()
     return cur.lastrowid
+
+def update(conn, table, id, **kwargs):
+    """
+   update attributes of a record
+   :param conn:
+   :param table: table name
+   :param id: row id
+   :return:
+   """
+    parameters = [f"{k} = ?" for k in kwargs]
+    parameters = ", ".join(parameters)
+    values = tuple(v for v in kwargs.values())
+    values += (id, )
+
+    sql = f''' UPDATE {table}
+             SET {parameters}
+             WHERE id = ?'''
+    try:
+       cur = conn.cursor()
+       cur.execute(sql, values)
+       conn.commit()
+       print("OK")
+    except sqlite3.OperationalError as e:
+       print(e)
+
