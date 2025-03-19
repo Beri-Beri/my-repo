@@ -134,3 +134,10 @@ if __name__ == '__main__':
     FOREIGN KEY (species_id) REFERENCES FlowerSpecies (id)
     );
     """
+
+    db_file = "database.db"
+
+    conn = create_connection(db_file)
+    execute_sql(conn, create_flower_species_sql)
+    execute_sql(conn, create_flower_details_sql)
+        
