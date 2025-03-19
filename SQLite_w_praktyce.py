@@ -157,4 +157,12 @@ if __name__ == '__main__':
 
     print(species_id, details_id)
     conn.commit()
+
+    update(conn, "FlowerDetails", 2, soil_type="Sandy")
+
+    delete_where(conn, "FlowerDetails", id=3)
+    delete_all(conn, "FlowerDetails")
+
+    if conn is not None:
+        conn.close()
         
