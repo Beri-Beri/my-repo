@@ -140,4 +140,21 @@ if __name__ == '__main__':
     conn = create_connection(db_file)
     execute_sql(conn, create_flower_species_sql)
     execute_sql(conn, create_flower_details_sql)
+
+    species = ("Rose", "Rosaceae", "Red", "Spring")
+   
+    species_id = add_flower_species(conn, species)
+
+    details = (
+        species_id,
+        50,
+        True,
+        "Loamy",
+        "Full Sun"
+    )
+    
+    details_id = add_flower_details(conn, details)
+
+    print(species_id, details_id)
+    conn.commit()
         
