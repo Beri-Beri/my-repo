@@ -61,3 +61,31 @@ def load_measures(csv_file):
                     tobs=float(row[3]) if row[3] else None
                 )
                 conn.execute(insert_stmt)
+
+load_stations('/Users/bernadettamajta/Desktop/Data/clean_stations.csv')
+load_measures('/Users/bernadettamajta/Desktop/Data/clean_measure.csv')
+
+with conn.begin():
+    result = conn.execute("SELECT * FROM clean_stations LIMIT 5").fetchall()
+    select_all = conn.execute("SELECT * FROM clean_stations").fetchall()
+    select_where = conn.execute("SELECT * FROM clean_stations WHERE station = 'USC00519397'").fetchall()
+    update = conn.execute("UPDATE clean_stations SET name = 'WAIKIKI 717.3' WHERE station = 'USC00519397'")
+    delete_where = conn.execute("DELETE FROM clean_stations WHERE station = 'USC00519397'")
+    delete_all = conn.execute("DELETE FROM clean_stations")
+
+    print(f"Liczba zaktualizowanych wierszy: {update.rowcount}")
+    print(f"Liczba usuniętych wierszy: {delete_where.rowcount}")
+
+print("Wyniki SELECT * FROM clean_stations LIMIT 5:")
+for row in result:
+    print(row)
+
+print("Wszystkie dane z tabeli clean_stations:")
+for row in select_all:
+    print(row)
+
+print("Wyniki SELECT WHERE station = 'USC00519397':")
+for row in select_where:
+    print(row)
+
+conn.close()
