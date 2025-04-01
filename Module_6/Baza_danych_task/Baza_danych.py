@@ -1,7 +1,7 @@
 import csv
 import sqlalchemy
 import datetime
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, Date, ForeignKey
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, Date, ForeignKey, text
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
@@ -36,6 +36,7 @@ def load_stations(csv_filename):
     csv_path = BASE_DIR / csv_filename
     try:
         with conn.begin():
+            conn.execute(text("DELETE FROM clean_stations"))
             with open(csv_path, newline='', encoding='utf-8') as csvfile:
                 reader = csv.reader(csvfile)
                 next(reader)
@@ -58,6 +59,7 @@ def load_measures(csv_filename):
     csv_path = BASE_DIR / csv_filename
     try:
         with conn.begin():
+            conn.execute(text("DELETE FROM clean_measure"))
             with open(csv_path, newline='', encoding='utf-8') as csvfile:
                 reader = csv.reader(csvfile)
                 next(reader)
@@ -73,30 +75,34 @@ def load_measures(csv_filename):
     except Exception as e:
         print(f"Błąd podczas ładowania {csv_filename}: {e}")
 
+
+
 load_stations('clean_stations.csv')
 load_measures('clean_measure.csv')
 
+conn.commit()
+
 try:
     with conn.begin():
-        result = conn.execute("SELECT * FROM clean_stations LIMIT 5").fetchall()
-        select_all = conn.execute("SELECT * FROM clean_stations").fetchall()
-        select_where = conn.execute("SELECT * FROM clean_stations WHERE station = 'USC00519397'").fetchall()
-        update = conn.execute("UPDATE clean_stations SET name = 'WAIKIKI 717.3' WHERE station = 'USC00519397'")
-        delete_where = conn.execute("DELETE FROM clean_stations WHERE station = 'USC00519397'")
-        delete_all = conn.execute("DELETE FROM clean_stations")
+        result = conn.execute(text("SELECT * FROM clean_stations LIMIT 5")).fetchall()
+        select_all = conn.execute(text("SELECT * FROM clean_stations")).fetchall()
+        select_where = conn.execute(text("SELECT * FROM clean_stations WHERE station = 'USC00519397'")).fetchall()
+        update = conn.execute(text("UPDATE clean_stations SET name = 'WAIKIKI 717.3' WHERE station = 'USC00519397'"))
+        delete_where = conn.execute(text("DELETE FROM clean_stations WHERE station = 'USC00519397'"))
+        delete_all = conn.execute(text("DELETE FROM clean_stations"))
 
         print(f"Liczba zaktualizowanych wierszy: {update.rowcount}")
         print(f"Liczba usuniętych wierszy: {delete_where.rowcount}")
 
-    print("Wyniki SELECT * FROM clean_stations LIMIT 5:")
+    print("\nWyniki SELECT * FROM clean_stations LIMIT 5:")
     for row in result:
         print(row)
 
-    print("Wszystkie dane z tabeli clean_stations:")
+    print("\nWszystkie dane z tabeli clean_stations:")
     for row in select_all:
         print(row)
 
-    print("Wyniki SELECT WHERE station = 'USC00519397':")
+    print("\nWyniki SELECT WHERE station = 'USC00519397':")
     for row in select_where:
         print(row)
 except Exception as e:
