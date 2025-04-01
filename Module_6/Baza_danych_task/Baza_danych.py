@@ -2,8 +2,10 @@ import csv
 import sqlalchemy
 import datetime
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, Date, ForeignKey
+from pathlib import Path
 
-engine = create_engine('sqlite:///data.db')
+BASE_DIR = Path(__file__).parent
+engine = create_engine(f"sqlite:///{BASE_DIR / 'data.db'}")
 
 metadata = MetaData()
 
@@ -13,7 +15,7 @@ clean_stations = Table(
     Column('latitude', Float),
     Column('longitude', Float),
     Column('elevation', Float),
-    Column('name', String(255) ),
+    Column('name', String(255)),
     Column('country', String(255)),
     Column('state', String(255))
 )
@@ -30,9 +32,10 @@ metadata.create_all(engine)
 
 conn = engine.connect()
 
-def load_stations(csv_file):
+def load_stations(csv_filename):
+    csv_path = BASE_DIR / csv_filename
     with conn.begin():
-        with open(csv_file, newline='', encoding='utf-8') as csvfile:
+        with open(csv_path, newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             next(reader)
             for row in reader:
@@ -47,9 +50,10 @@ def load_stations(csv_file):
                 )
                 conn.execute(insert_stmt)
 
-def load_measures(csv_file):
+def load_measures(csv_filename):
+    csv_path = BASE_DIR / csv_filename
     with conn.begin():
-        with open(csv_file, newline='', encoding='utf-8') as csvfile:
+        with open(csv_path, newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             next(reader)
             for row in reader:
@@ -62,8 +66,8 @@ def load_measures(csv_file):
                 )
                 conn.execute(insert_stmt)
 
-load_stations('/Users/bernadettamajta/Desktop/Data/clean_stations.csv')
-load_measures('/Users/bernadettamajta/Desktop/Data/clean_measure.csv')
+load_stations('clean_stations.csv')
+load_measures('clean_measure.csv')
 
 with conn.begin():
     result = conn.execute("SELECT * FROM clean_stations LIMIT 5").fetchall()
